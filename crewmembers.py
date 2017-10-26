@@ -4,17 +4,31 @@ import json
 
 class CrewMember:
     name = ""
-    role = ""
+    skill = ""
 
-    def __init__(self, name, role):
+    def __init__(self, name, skill):
         self.name = name
-        self.role = role
+        self.skill = Skill(skill)
 
     def __str__(self):
-        return str(self.name + " : " + str(self.role))
+        return str(self.name + " : " + str(self.skill))
 
     def __repr__(self):
-        return str(self.name + " : " + str(self.role))
+        return str(self.name + " : " + str(self.skill))
+
+
+class Skill:
+    skill = ""
+    skills = ["Pilot", "Gunner", "Navigator", "Radio Op", "Engineer", "Bomber"]
+
+    def __init__(self, skill):
+        self.skill = self.skills[skill]
+
+    def __str__(self):
+        return str(self.skill)
+
+    def __repr__(self):
+        return str(self.skill)
 
 
 def get_active_crew_members():
