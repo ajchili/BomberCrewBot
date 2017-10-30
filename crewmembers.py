@@ -34,5 +34,5 @@ class Skill:
 def get_active_crew_members():
     with open("C:\\Users\\" + os.getlogin() + "\\AppData\\LocalLow\\Runner Duck\\Bomber Crew\\BC_SaveSlotV2_0.dat") \
             as file:
-            return [CrewMember(crew_member["m_firstName"], crew_member["m_primarySkill"]["m_skillType"]) for
-                    crew_member in json.load(file)["m_activeCrewmen"]]
+        return [CrewMember(crew_member["m_firstName"], crew_member["m_primarySkill"]["m_skillType"]) for
+                crew_member in json.load(file)["m_activeCrewmen"]]
