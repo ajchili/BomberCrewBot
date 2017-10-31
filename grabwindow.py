@@ -3,6 +3,7 @@ from ctypes import windll
 
 import cv2
 import numpy
+import pywintypes
 from mss import mss
 
 # Make program aware of DPI scaling
@@ -12,20 +13,26 @@ windll.user32.SetProcessDPIAware()
 def grab_window():
     while True:
         # Obtain Bomber Crew window size
-        hwnd = win32gui.FindWindow("UnityWndClass", None)
-        left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-        width = right - left
-        height = bottom - top
-        game_window = {'top': top, 'left': left, 'width': width, 'height': height}
-
-        foreground_window = win32gui.GetWindowText(win32gui.GetForegroundWindow())
-
-        while foreground_window == "Bomber Crew":
-            print(foreground_window)
-            img = numpy.array(mss().grab(game_window))
-            cv2.imshow('test', img)
-            if cv2.waitKey(25) & 0xFF == ord('q'):
-                cv2.destroyAllWindows()
-                break
+        try:
+            hwnd = win32gui.FindWindow("UnityWndClass", None)
+            left, top, right, bottom = win32gui.GetWindowRect(hwnd)
+        except pywintypes.error:
+            print("Bomber Crew Window Not Found!")
         else:
-            print("Bomber Crew Window Not Active!")
+            width = right - left
+            height = bottom - top
+            game_window = {'top': top, 'left': left, 'width': width, 'height': height}
+
+            foreground_window_name = win32gui.GetWindowText(win32gui.GetForegroundWindow())
+
+            if foreground_window_name == "Bomber Crew":
+                game_capture = numpy.array(mss().grab(game_window))
+                cv2.imshow('BomberCrewBot', game_capture)
+
+                if cv2.waitKey(25) & 0xFF == ord('q'):
+                    cv2.destroyAllWindows()
+                    break
+                return game_capture
+            else:
+                print("Bomber Crew Window Not Active!")
+                break
