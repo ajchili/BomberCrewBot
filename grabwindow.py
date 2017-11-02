@@ -29,14 +29,14 @@ def grab_window():
 
             if foreground_window_name == "Bomber Crew":
                 game_capture = numpy.array(mss().grab(game_window))
-                analyze_window(game_capture)
-                cv2.imshow('BomberCrewBot', game_capture)
+                analyze_window(game_capture, left, top)
+                # cv2.imshow('BomberCrewBot', game_capture)
 
-                if cv2.waitKey(25) & 0xFF == ord('q'):
+                if cv2.waitKey(33) & 0xFF == ord('q'):
                     cv2.destroyAllWindows()
                     break
                 return game_capture
             else:
                 print("Bomber Crew Window Not Active!")
-                time.sleep(.250)
+                time.sleep(.25)
                 break
