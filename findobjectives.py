@@ -18,7 +18,7 @@ def locate_nav(window):
     w, h = template.shape[::-1]
     res = cv2.matchTemplate(img, template, cv2.TM_CCOEFF)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-    if min_val > -74000000 and max_val > 14000000 and not (600 > min_loc[0] > 370 and 300 > min_loc[1] > 65):
+    if min_val > -74000000 and max_val > 14000000:
         print(str(min_loc[0]) + " : " + str(min_loc[1]))
         bottom_right = (min_loc[0] + w, min_loc[1] + h)
         cv2.rectangle(img, min_loc, bottom_right, 255, 1)
