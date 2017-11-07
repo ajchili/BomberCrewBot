@@ -29,7 +29,7 @@ def grab_window():
 
             if foreground_window_name == "Bomber Crew":
                 game_capture = numpy.array(mss().grab(game_window))
-                analyze_window(game_capture, left, top)
+                analyze_window(game_capture, width, height, left, top)
                 # cv2.imshow('BomberCrewBot', game_capture)
 
                 if cv2.waitKey(33) & 0xFF == ord('q'):
