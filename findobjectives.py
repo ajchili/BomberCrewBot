@@ -11,9 +11,9 @@ def analyze_window(window, window_x, window_y):
 
 def locate_nav(window):
     print('locating nav')
-
-    lower = np.array([15, 95, 55], np.uint8)
-    upper = np.array([25, 255, 255], np.uint8)
+    
+    lower = np.array([15, 225, 79], np.uint8)
+    upper = np.array([20, 255, 150], np.uint8)
     img = cv2.inRange(cv2.cvtColor(window, cv2.COLOR_BGR2HSV), lower, upper)
     dim = (100, 100)
     template = cv2.resize(cv2.imread('res/nav.jpg', 0), dim, interpolation=cv2.INTER_AREA)
