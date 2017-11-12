@@ -23,7 +23,9 @@ def grab_window():
         else:
             width = right - left
             height = bottom - top
+            win32gui.MoveWindow(hwnd, 160, 12, width, height, False)
             game_window = {'top': top, 'left': left, 'width': width, 'height': height}
+
 
             foreground_window_name = win32gui.GetWindowText(win32gui.GetForegroundWindow())
 
@@ -31,11 +33,7 @@ def grab_window():
                 game_capture = numpy.array(mss().grab(game_window))
                 analyze_window(game_capture, width, height, left, top)
                 # cv2.imshow('BomberCrewBot', game_capture)
-
-                if cv2.waitKey(33) & 0xFF == ord('q'):
-                    cv2.destroyAllWindows()
-                    break
-                return game_capture
+                cv2.waitKey(1)
             else:
                 print("Bomber Crew Window Not Active!")
                 time.sleep(.25)
