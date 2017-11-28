@@ -14,8 +14,8 @@ def locate_nav(window, is_day):
 
     # TODO: Implement way to detect/check for if navigation icon is in clouds
     if is_day:
-        lower = np.array([15, 160, 160], np.uint8)
-        upper = np.array([35, 255, 180], np.uint8)
+        lower = np.array([15, 160, 150], np.uint8)
+        upper = np.array([25, 255, 180], np.uint8)
     else:
         lower = np.array([15, 150, 75], np.uint8)
         upper = np.array([35, 255, 180], np.uint8)
