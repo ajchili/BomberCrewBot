@@ -23,7 +23,7 @@ def grab_window():
         else:
             width = right - left
             height = bottom - top
-            win32gui.MoveWindow(hwnd, 160, 12, width, height, False)
+            # win32gui.MoveWindow(hwnd, 160, 12, width, height, False)
             game_window = {'top': top, 'left': left, 'width': width, 'height': height}
 
 
