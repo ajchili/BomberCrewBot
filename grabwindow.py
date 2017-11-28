@@ -26,7 +26,6 @@ def grab_window():
             # win32gui.MoveWindow(hwnd, 160, 12, width, height, False)
             game_window = {'top': top, 'left': left, 'width': width, 'height': height}
 
-
             foreground_window_name = win32gui.GetWindowText(win32gui.GetForegroundWindow())
 
             if foreground_window_name == "Bomber Crew":

@@ -1,16 +1,17 @@
 import cv2
 import numpy as np
 
+
 def analyze_window(window, width, height, window_x, window_y):
     print("analyzing window")
     upper_half = cv2.rectangle(window, (0, 0), (width, int(height / 2)), (0, 0, 255), 1, cv2.LINE_8, 0)
     locate_nav(window, upper_half.mean() > 130)
 
 
-def locate_nav(window, isDay):
+def locate_nav(window, is_day):
     print('locating nav')
 
-    if isDay:
+    if is_day:
         lower = np.array([15, 150, 75], np.uint8)
         upper = np.array([35, 255, 180], np.uint8)
     else:

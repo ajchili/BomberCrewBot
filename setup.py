@@ -6,7 +6,7 @@ setup(
     packages=[''],
     url='',
     license='',
-    author='zappybiby',
+    author='zappybiby & ajchili',
     author_email='',
     description='', requires=['opencv-contrib-python', 'numpy', 'pyautogui', 'mss', 'pywin32', ]
 )
