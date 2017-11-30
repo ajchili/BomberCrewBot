@@ -1,9 +1,9 @@
 import copy
 
-import movementhandler as mvt
-
 import cv2
 import numpy as np
+
+import movementhandler as mvt
 
 DAY_TIME = 130
 NAV_DAY_LOWER = np.array([15, 160, 150], np.uint8)
@@ -25,17 +25,16 @@ def locate_nav(window, width, height, is_day):
     else:
         lower = NAV_NIGHT_LOWER
         upper = NAV_NIGHT_UPPER
+
     img = cv2.inRange(cv2.cvtColor(window, cv2.COLOR_BGR2HSV), lower, upper)
-
     template = cv2.imread('res/map_50px.png', 0)
-
     blur = cv2.medianBlur(cv2.bitwise_and(img, img), 5)
 
     w, h = template.shape[::-1]
     res = cv2.matchTemplate(blur, template, cv2.TM_CCOEFF)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-
     bottom_right = (min_loc[0] + w, min_loc[1] + h)
+
     if min_val < -500000 and max_val > 600000:
         cv2.rectangle(blur, min_loc, bottom_right, 255, 1)
         mvt.move_to_nav(width, height, min_loc[0], min_loc[1])
