@@ -35,12 +35,12 @@ def move_to_nav(width, height, nav_x, nav_y):
 
         if y_movement > min_y_movement_required:
             is_centered = False
-            pyautogui.keyDown('up', MOVEMENT_SPEED * abs(y_movement))
-            pyautogui.keyUp('up')
-        elif y_movement < -min_y_movement_required:
-            is_centered = False
             pyautogui.keyDown('down', MOVEMENT_SPEED * abs(y_movement))
             pyautogui.keyUp('down')
+        elif y_movement < -min_y_movement_required:
+            is_centered = False
+            pyautogui.keyDown('up', MOVEMENT_SPEED * abs(y_movement))
+            pyautogui.keyUp('up')
 
     if is_centered and not is_space_reset:
         is_space_reset = True
