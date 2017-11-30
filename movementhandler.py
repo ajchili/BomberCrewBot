@@ -22,22 +22,20 @@ def move_to_nav(width, height, nav_x, nav_y):
         x_movement = (nav_x - (center_x - CIRCLE_WIDTH)) / center_x
         y_movement = (nav_y - (center_y - CIRCLE_WIDTH)) / center_y
 
-        print(x_movement, y_movement)
-
-        if x_movement > 0:
+        if x_movement > 0.125:
             is_centered = False
             pyautogui.keyDown('right', MOVEMENT_SPEED * abs(x_movement))
             pyautogui.keyUp('right')
-        else:
+        elif x_movement < -0.125:
             is_centered = False
             pyautogui.keyDown('left', MOVEMENT_SPEED * abs(x_movement))
             pyautogui.keyUp('left')
 
-        if y_movement > 0:
+        if y_movement > 0.125:
             is_centered = False
             pyautogui.keyDown('up', MOVEMENT_SPEED * abs(y_movement))
             pyautogui.keyUp('up')
-        else:
+        elif y_movement < -0.125:
             is_centered = False
             pyautogui.keyDown('down', MOVEMENT_SPEED * abs(y_movement))
             pyautogui.keyUp('down')
