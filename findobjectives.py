@@ -1,5 +1,7 @@
 import copy
+import threading
 
+import ctypes
 import cv2
 import numpy as np
 
@@ -15,10 +17,10 @@ NAV_NIGHT_UPPER = np.array([35, 255, 180], np.uint8)
 def analyze_window(window, width, height, window_x, window_y):
     upper_half = cv2.rectangle(copy.deepcopy(window), (0, 0), (width, int(height / 2)), (0, 0, 255), 1, cv2.LINE_8, 0)
     is_day = upper_half.mean() > DAY_TIME
-    locate_nav(window, width, height, is_day)
+    locate_nav(window, width, height, is_day, window_x, window_y)
 
 
-def locate_nav(window, width, height, is_day):
+def locate_nav(window, width, height, is_day, window_x, window_y):
     if is_day:
         lower = NAV_DAY_LOWER
         upper = NAV_DAY_UPPER
@@ -36,8 +38,8 @@ def locate_nav(window, width, height, is_day):
     bottom_right = (min_loc[0] + w, min_loc[1] + h)
 
     if min_val < -500000 and max_val > 600000:
+        threading.Thread(target=mvt.move_to_nav, args=(width, height, min_loc[0] + (w / 2), min_loc[1] + (h / 2),)).start()
         cv2.rectangle(blur, min_loc, bottom_right, 255, 1)
-        mvt.move_to_nav(width, height, min_loc[0], min_loc[1])
 
     cv2.imshow("BomberCrewBot Test", blur)
     cv2.moveWindow("BomberCrewBot Test", -1920, 0)
