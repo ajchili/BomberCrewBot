@@ -5,11 +5,11 @@ import pyautogui
 CIRCLE_WIDTH = 150
 MOVEMENT_TIME = 0.1
 is_space_pressed = False
-is_view_reseting = False
-is_started = False
+is_nav_selected = False
 
-def move_to_nav(width, height, nav_x, nav_y):
-    global is_space_pressed, is_view_reseting, is_started
+
+def move(width, height, nav_x, nav_y):
+    global is_space_pressed, is_nav_selected
     nav_is_centered_x = False
     nav_is_centered_y = False
 
@@ -17,7 +17,7 @@ def move_to_nav(width, height, nav_x, nav_y):
         is_space_pressed = True
         pyautogui.press('space')
 
-    if is_space_pressed and not is_view_reseting:
+    if is_space_pressed and not is_nav_selected:
         center_x = width / 2
         center_y = height / 2
         x_movement = (nav_x - (center_x - CIRCLE_WIDTH)) / center_x
@@ -32,7 +32,7 @@ def move_to_nav(width, height, nav_x, nav_y):
             pyautogui.keyDown('left', MOVEMENT_TIME * abs(x_movement))
             pyautogui.keyUp('left')
         else:
-             nav_is_centered_x = True
+            nav_is_centered_x = True
 
         if y_movement > min_y_movement_required:
             pyautogui.keyDown('down', MOVEMENT_TIME * abs(y_movement))
@@ -43,13 +43,13 @@ def move_to_nav(width, height, nav_x, nav_y):
         else:
             nav_is_centered_y = True
 
-    if nav_is_centered_x and nav_is_centered_y and not is_view_reseting:
-        is_view_reseting = True
-        threading.Timer(3, reset_is_space_pressed).start()
+    if nav_is_centered_x and nav_is_centered_y and not is_nav_selected:
+        is_nav_selected = True
+        threading.Timer(3, reset).start()
 
 
-def reset_is_space_pressed():
-    global is_space_pressed, is_view_reseting
+def reset():
+    global is_space_pressed, is_nav_selected
     is_space_pressed = False
     pyautogui.press('space')
-    is_view_reseting = False
+    is_nav_selected = False
