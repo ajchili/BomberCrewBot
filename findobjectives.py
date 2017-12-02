@@ -2,10 +2,14 @@ import copy
 import threading
 
 import ctypes
+
+import pyautogui
+import mouse
 import cv2
 import numpy as np
 
-import movementhandler as mvt
+import movetonavwithmouse
+import movetonavwithkeyboard
 
 DAY_TIME = 130
 NAV_DAY_LOWER = np.array([15, 160, 150], np.uint8)
@@ -38,7 +42,9 @@ def locate_nav(window, width, height, is_day, window_x, window_y):
     bottom_right = (min_loc[0] + w, min_loc[1] + h)
 
     if min_val < -500000 and max_val > 600000:
-        threading.Thread(target=mvt.move_to_nav, args=(width, height, min_loc[0] + (w / 2), min_loc[1] + (h / 2),)).start()
+        # TODO: Implement way to switch between mouse and keyboard input
+        # movetonavwithmouse.move_to_nav(width, height,min_loc[0] + (w / 2), min_loc[1] + (h / 2))
+        # threading.Thread(target=movetonavwithkeyboard.move_to_nav, args=(width, height, min_loc[0] + (w / 2), min_loc[1] + (h / 2),)).start()
         cv2.rectangle(blur, min_loc, bottom_right, 255, 1)
 
     cv2.imshow("BomberCrewBot Test", blur)
