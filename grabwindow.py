@@ -6,15 +6,18 @@ import cv2
 import numpy
 import pywintypes
 from mss import mss
+import threading
 
 from findobjectives import analyze_window
 
 # Make program aware of DPI scaling
 windll.user32.SetProcessDPIAware()
 
+isRunning = False
+
 
 def grab_window():
-    while True:
+    while isRunning:
         # Obtain Bomber Crew window size
         try:
             hwnd = win32gui.FindWindow("UnityWndClass", None)
@@ -35,3 +38,17 @@ def grab_window():
                 cv2.waitKey(1)
             else:
                 break
+
+
+def begin():
+    global isRunning
+
+    if not isRunning:
+        isRunning = True
+        threading.Thread(target=grab_window).start()
+
+
+def end():
+    global isRunning
+
+    isRunning = False

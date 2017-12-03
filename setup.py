@@ -8,5 +8,5 @@ setup(
     license='',
     author='zappybiby & ajchili',
     author_email='',
-    description='', requires=['opencv-contrib-python', 'numpy', 'pyautogui', 'mss', 'pywin32']
+    description='', requires=['opencv-contrib-python', 'numpy', 'pyautogui', 'mss', 'pywin32', 'pynput']
 )
