@@ -47,4 +47,4 @@ def locate_nav(window, width, height, is_day, window_x, window_y):
         cv2.rectangle(blur, min_loc, bottom_right, 255, 1)
 
     cv2.imshow("BomberCrewBot Test", blur)
-    cv2.moveWindow("BomberCrewBot Test", -1920, 0)
+    # cv2.moveWindow("BomberCrewBot Test", -1920, 0)
