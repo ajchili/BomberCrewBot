@@ -1,6 +1,5 @@
-import grabwindow
+from utils import grabwindow
 from utils.crewmembers import get_active_crew_members
-from bot.takeoffmanager import takeoff
 
 from pynput.keyboard import Key, KeyCode, Listener
 
@@ -14,12 +13,8 @@ def on_press(key):
 
     if key == KeyCode(vk=0, char='q'):
         isActive = not isActive
-        if isActive and hasTakenOff:
+        if isActive:
             grabwindow.begin()
-        elif isActive and not hasTakenOff:
-            hasTakenOff = takeoff()
-            if hasTakenOff:
-                grabwindow.begin()
         else:
             grabwindow.end()
 

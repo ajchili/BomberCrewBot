@@ -6,7 +6,7 @@ ENEMY_NIGHT_UPPER = np.array([70, 160, 255], np.uint8)
 
 # noinspection PyArgumentList
 # for some dumb reason relative paths aren't working for this...
-cap = cv2.VideoCapture(r'C:\Users\brian\PycharmProjects\BomberCrewBot\enemyspotting.avi')
+cap = cv2.VideoCapture(r'C:\Users\brian\PycharmProjects\BomberCrewBot\res\enemyspotting.avi')
 while cap.isOpened():
     ret, frame = cap.read()
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
