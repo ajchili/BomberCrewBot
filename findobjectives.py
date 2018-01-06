@@ -27,5 +27,4 @@ def locate_nav(window, width, height, is_day):
     else:
         lower = NAV_NIGHT_LOWER
         upper = NAV_NIGHT_UPPER
-    template_finder.locate_template(window, width, height, cv2.imread('res/nav.png', 0), -500000, 600000, lower, upper,
-                                    use_mouse)
+    template_finder.locate_template(window, width, height, cv2.imread('res/nav.png', 0), -500000, 600000, lower, upper, use_mouse)
