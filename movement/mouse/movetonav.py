@@ -27,7 +27,7 @@ def move(width, height, nav_x, nav_y):
         is_nav_selected = True
         threading.Timer(3, reset)
     elif not is_nav_selected:
-        win32api.mouse_event(win32con.MOUSEEVENTF_ABSOLUTE | win32con.MOUSEEVENTF_MOVE, int(65535 / 2), int(65536 / 2), 0, 0)
+        win32api.mouse_event(win32con.MOUSEEVENTF_ABSOLUTE | win32con.MOUSEEVENTF_MOVE, int(65535 / 2), int(65535 / 2), 0, 0)
         win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, int(x_movement * MOVEMENT_SPEED), int(y_movement * MOVEMENT_SPEED), 0, 0)
 
 
