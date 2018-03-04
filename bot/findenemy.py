@@ -1,18 +1,20 @@
 import cv2
 import numpy as np
 
+from movement import mousemovement as mouse_nav
+
 ENEMY_SPOTTED_LOWER = np.array([55, 100, 200], np.uint8)
 ENEMY_SPOTTED_UPPER = np.array([70, 160, 255], np.uint8)
 
 ENEMY_MARKING_LOWER = np.array([170, 100, 0], np.uint8)
 ENEMY_MARKING_UPPER = np.array([180, 255, 255], np.uint8)
 
-# noinspection PyArgumentList
-# for some dumb reason relative paths aren't working for this...
-cap = cv2.VideoCapture(r'C:\Users\brian\PycharmProjects\BomberCrewBot\res\enemyspotting.avi')
-while cap.isOpened():
-    ret, frame = cap.read()
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+def analyze_window(window, width, height):
+    find_enemies(window, width, height)
+
+def find_enemies(window, width, height):
+    hsv = cv2.cvtColor(window, cv2.COLOR_BGR2HSV)
     spotted_thresh = cv2.inRange(hsv, ENEMY_SPOTTED_LOWER, ENEMY_SPOTTED_UPPER)
     spotted_blur = cv2.medianBlur(spotted_thresh, 5)
 
@@ -27,15 +29,14 @@ while cap.isOpened():
             center = (x, y)
             # circle center
             cv2.circle(spotted_blur, center, 1, (0, 100, 100), 3)
-            cv2.circle(frame, center, 1, (0, 100, 100), 3)
+            cv2.circle(window, center, 1, (0, 100, 100), 3)
             # circle outline
-            cv2.circle(spotted_blur, center, r + 20, (255, 255, 255), 5)
-            cv2.circle(frame, center, r, (0, 255, 255), 1)
+            cv2.circle(spotted+_blur, center, r + 20, (255, 255, 255), 5)
+            cv2.circle(window, center, r, (0, 255, 255), 1)
 
-            cv2.putText(spotted_blur, "enemy plane", (x, y - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255),
+            cv2.putText(spotted_blur, "enemy plane", (x - 500, y - 500), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255),
                         2, cv2.LINE_AA)
-
-            # TODO: Move mouse to detected plane
+            mouse_nav.move(width, height, x, y)
 
     marking_thresh = cv2.inRange(hsv, ENEMY_MARKING_LOWER, ENEMY_MARKING_UPPER)
     marking_blur = cv2.medianBlur(marking_thresh, 5)
@@ -54,11 +55,11 @@ while cap.isOpened():
             spotted_center = (x, y)
             # circle center
             cv2.circle(marking_blur, spotted_center, 1, (0, 100, 100), 5)
-            cv2.circle(frame, spotted_center, 1, (0, 100, 100), 3)
+            cv2.circle(window, spotted_center, 1, (0, 100, 100), 3)
             # circle outline
             cv2.circle(marking_blur, spotted_center, r + 20, (255, 255, 255), 5)
-            cv2.circle(frame, spotted_center, r, (0, 255, 255), 1)
-            cv2.putText(marking_blur, "enemy plane " + str(i), (x, y + 100), cv2.FONT_HERSHEY_SIMPLEX, 1,
+            cv2.circle(window, spotted_center, r, (0, 255, 255), 1)
+            cv2.putText(marking_blur, "enemy plane " + str(i), (x - 50, y + 100), cv2.FONT_HERSHEY_SIMPLEX, 0.75,
                         (255, 255, 255), 2, cv2.LINE_AA)
 
             if i == 0:
@@ -95,7 +96,8 @@ while cap.isOpened():
 
         roi_topleft = (min_x, min_y)
         roi_bottomright = (max_x, max_y)
-        marking_blur = marking_blur[min_y:max_y + 540, min_x:max_x + 960]
+        #marking_blur = marking_blur[min_y:max_y + 540, min_x:max_x + 960]
+        marking_blur = marking_blur[min_y:max_y + 500, min_x:max_x + 1000]
         #cv2.imshow("cropped", crop_img)
 
         #cv2.rectangle(marking_blur, roi_topleft, roi_bottomright, (255, 255, 255), 3)
@@ -107,7 +109,7 @@ while cap.isOpened():
     cv2.moveWindow('spotted', 0, 0)
 
     cv2.namedWindow('video', cv2.WINDOW_NORMAL)
-    cv2.imshow('video', frame)
+    cv2.imshow('video', window)
     cv2.resizeWindow('video', 960, 540)
     cv2.moveWindow('video', 960, 0)
 
@@ -115,10 +117,3 @@ while cap.isOpened():
     cv2.imshow('marking', marking_blur)
     cv2.resizeWindow('marking', 960, 540)
     cv2.moveWindow('marking', 0, 540)
-
-    # changing waitkey interval changes playblack speed.
-    if cv2.waitKey(25) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()

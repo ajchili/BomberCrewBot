@@ -13,7 +13,10 @@ def locate_template(window, width, height, template, min_val, max_val, lower, up
     # TODO: Change movement location
     if local_min_val < min_val and local_max_val > max_val:
         cv2.rectangle(blur, min_loc, bottom_right, 255, 1)
-        cv2.imshow("BomberCrewBot Template Locator", blur)
+        cv2.namedWindow('TemplateLocator', cv2.WINDOW_NORMAL)
+        cv2.imshow('TemplateLocator', blur)
+        cv2.resizeWindow('TemplateLocator', 500, 500)
+        cv2.moveWindow('TemplateLocator', 0, 0)
         return min_loc[0], min_loc[1]
     else:
         return None, None
