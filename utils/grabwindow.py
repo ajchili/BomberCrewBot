@@ -8,7 +8,7 @@ import pywintypes
 from mss import mss
 import threading
 
-from findobjectives import analyze_window
+import bot.core as core
 
 # Make program aware of DPI scaling
 windll.user32.SetProcessDPIAware()
@@ -17,6 +17,8 @@ isRunning = False
 
 
 def grab_window():
+    global isRunning
+
     while isRunning:
         # Obtain Bomber Crew window size
         try:
@@ -34,7 +36,7 @@ def grab_window():
 
             if foreground_window_name == "Bomber Crew":
                 game_capture = numpy.array(mss().grab(game_window))
-                analyze_window(game_capture, width, height, left, top)
+                core.run(game_capture, width, height)
                 cv2.waitKey(1)
             else:
                 break
